@@ -17,7 +17,7 @@ class EditProfileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'  => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email,' . Auth::guard('triage-doctor-api')->id(),
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ], [
             'name.required'  => 'Name is required.',
@@ -37,13 +37,13 @@ class EditProfileController extends Controller
 
             DB::beginTransaction();
 
-            $imageName = $doctor->image;
+            $imageName = $doctor->image ?? null;
 
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo');
                 $ext = $photo->getClientOriginalExtension();
-                $imageName = "triage-" . uniqid() . "." . $ext;
-                $photo->move(public_path('images/triage_doctors'), $imageName);
+                $imageName = "doctor-" . uniqid() . "." . $ext;
+                $photo->move(public_path('images/doctors'), $imageName);
             }
 
             $doctor->update([
