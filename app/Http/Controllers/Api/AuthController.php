@@ -33,11 +33,13 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-            'access_token' => $token,
-            'token_type'   => 'bearer',
-            'status'       => 200,
-            'message'      => 'Login successful.',
-            'user'         => Auth::guard('triage-doctor-api')->user(),
+            'data' => [
+                'access_token' => $token,
+                'token_type'   => 'bearer',
+                'status'       => 200,
+                'message'      => 'Login successful.',
+                'user'         =>  Auth::user(),
+            ]
         ]);
     }
 
@@ -55,7 +57,7 @@ class AuthController extends Controller
     {
         $doctor = Auth::user();
         if ($doctor && $doctor->image) {
-            $doctor->image = asset('images/triage_doctors/' . $doctor->image);
+            $doctor->image = asset('images/doctors/' . $doctor->image);
         }
 
         return response()->json([

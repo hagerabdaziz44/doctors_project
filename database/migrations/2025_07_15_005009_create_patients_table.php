@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female']);
             $table->integer('age');
             $table->text('complaint')->nullable();
-          
+
             $table->text('past_hx')->nullable();
             $table->string('ticket_no')->nullable();
 
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->integer('rbs')->nullable();       // Random blood sugar
 
             // Status
-            $table->enum('status', ['urgent', 'moderate', 'cold'])->nullable();
+            $table->enum('status', ['critical','urgent', 'moderate', 'cold'])->nullable();
 
             // Relation
             $table->unsignedBigInteger('special_id')->nullable();
