@@ -45,12 +45,22 @@ class EditProfileController extends Controller
                 $imageName = "doctor-" . uniqid() . "." . $ext;
                 $photo->move(public_path('images/doctors'), $imageName);
             }
-
-            $doctor->update([
-                'name'  => $request->name,
-                'email' => $request->email,
-                'image' => $imageName,
-            ]);
+            if ($request->password) {
+                $doctor->update([
+                    'name'  => $request->name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'image' => $imageName,
+                    'password' => Hash::make($request->password),
+                ]);
+            } else {
+                $doctor->update([
+                    'name'  => $request->name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'image' => $imageName,
+                ]);
+            }
 
             DB::commit();
 
