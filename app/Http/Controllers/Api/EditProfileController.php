@@ -19,10 +19,13 @@ class EditProfileController extends Controller
             'name'  => 'required|string|max:100',
             'email' => 'required|email|unique:users,email,' . Auth::id(),
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'phone' => 'required|number|unique:users,phone,' . Auth::id(),
+            'password' => 'required|string|max:50',
         ], [
             'name.required'  => 'Name is required.',
             'email.required' => 'Email is required.',
             'email.unique'   => 'This email is already taken.',
+            'phone.unique'   => 'This phone is already taken.',
         ]);
 
         if ($validator->fails()) {
