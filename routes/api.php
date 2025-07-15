@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\TriageDoctor\AuthController;
-use App\Http\Controllers\Api\TriageDoctor\EditProfileController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\EditProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,21 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['namespace' => 'TriageDoctors'], function () {
+Route::group(['namespace' => 'Doctors'], function () {
 
-    Route::post('triage-doctor/register', [AuthController::class, 'register']);
-    Route::post('triage-doctor/login', [AuthController::class, 'login']);
+  
+    Route::post('login', [AuthController::class, 'login']);
 
-    // Add more public routes if needed
+
 });
 
 
-Route::group(['middleware' => 'checkUser:triage-doctor-api'], function () {
+Route::group(['middleware' => 'checkUser'], function () {
 
-    Route::post('triage-doctor/logout', [AuthController::class, 'logout']);
-    Route::get('triage-doctor/profile', [AuthController::class, 'getProfile']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('profile', [AuthController::class, 'getProfile']);
 
     
-     Route::post('triage-doctor/edit', [EditProfileController::class, 'editProfile']);
+     Route::post('edit/profile', [EditProfileController::class, 'editProfile']);
     // Route::post('triage-doctor/change-password', [AuthController::class, 'changePassword']);
 });

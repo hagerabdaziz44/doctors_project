@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\TriageDoctor;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Exception;
@@ -17,7 +17,7 @@ class EditProfileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'  => 'required|string|max:100',
-            'email' => 'required|email|unique:triage_doctors,email,' . Auth::guard('triage-doctor-api')->id(),
+            'email' => 'required|email|unique:users,email,' . Auth::guard('triage-doctor-api')->id(),
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ], [
             'name.required'  => 'Name is required.',
@@ -33,7 +33,7 @@ class EditProfileController extends Controller
         }
 
         try {
-            $doctor = Auth::guard('triage-doctor-api')->user();
+            $doctor = Auth::user();
 
             DB::beginTransaction();
 
