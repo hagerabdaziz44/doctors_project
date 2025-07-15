@@ -40,9 +40,9 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'triage-doctor-api' => [
+        'api' => [
             'driver' => 'jwt',
-            'provider' => 'triage_doctors',
+            'provider' => 'users',
         ],
     ],
 
@@ -68,15 +68,8 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'triage_doctors' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\TriageDoctor::class,
-        ],
+       
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*

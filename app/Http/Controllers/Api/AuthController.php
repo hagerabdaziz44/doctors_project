@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\TriageDoctor;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email'    => 'required|email|exists:triage_doctors,email',
+            'email'    => 'required|email|exists:users,email',
             'password' => 'required|string|max:50',
         ]);
 
@@ -23,7 +23,7 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (! $token = Auth::guard('triage-doctor-api')->attempt($credentials)) {
+        if (! $token = Auth::attempt($credentials)) {
             return response()->json(['message' => 'Invalid email or password.'], 401);
         }
 
@@ -53,7 +53,7 @@ class AuthController extends Controller
 
     public function getProfile()
     {
-        $doctor = Auth::guard('triage-doctor-api')->user();
+        $doctor = Auth::user();
         if ($doctor && $doctor->image) {
             $doctor->image = asset('images/triage_doctors/' . $doctor->image);
         }
